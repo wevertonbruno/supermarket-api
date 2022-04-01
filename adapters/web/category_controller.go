@@ -7,18 +7,18 @@ import (
 	"net/http"
 )
 
-type ProductController struct {
-	service ports.ProductServicePort
+type CategoryController struct {
+	service ports.CategoryServicePort
 }
 
-func NewProductController(service ports.ProductServicePort) *ProductController {
-	return &ProductController{
+func NewCategoryController(service ports.CategoryServicePort) *CategoryController {
+	return &CategoryController{
 		service: service,
 	}
 }
 
-func (p ProductController) Save(e echo.Context) error {
-	var input DTO.InputProductDTO
+func (p CategoryController) Save(e echo.Context) error {
+	var input DTO.InputCategoryDTO
 
 	err := e.Bind(&input)
 	if err != nil {
@@ -33,8 +33,8 @@ func (p ProductController) Save(e echo.Context) error {
 	return e.JSON(http.StatusCreated, nil)
 }
 
-func (p ProductController) Update(e echo.Context) error {
-	var input DTO.InputProductDTO
+func (p CategoryController) Update(e echo.Context) error {
+	var input DTO.InputCategoryDTO
 
 	ID := e.Param("id")
 
@@ -51,13 +51,13 @@ func (p ProductController) Update(e echo.Context) error {
 	return e.JSON(http.StatusOK, nil)
 }
 
-func (p ProductController) FindAll(e echo.Context) error {
+func (p CategoryController) FindAll(e echo.Context) error {
 	response := p.service.FindAll()
 
 	return e.JSON(http.StatusOK, response)
 }
 
-func (p ProductController) FindById(e echo.Context) error {
+func (p CategoryController) FindById(e echo.Context) error {
 	ID := e.Param("id")
 
 	response, err := p.service.FindById(ID)
@@ -68,7 +68,7 @@ func (p ProductController) FindById(e echo.Context) error {
 	return e.JSON(http.StatusOK, response)
 }
 
-func (p ProductController) Delete(e echo.Context) error {
+func (p CategoryController) Delete(e echo.Context) error {
 	ID := e.Param("id")
 
 	err := p.service.Delete(ID)
